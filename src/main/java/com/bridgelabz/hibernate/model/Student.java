@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Entity
 public class Student {
@@ -15,7 +16,16 @@ public class Student {
 
     private int marks;
     private String name;
-//    @OneToOne
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Student.class.getSimpleName() + "[", "]")
+                .add("rollNo=" + rollNo)
+                .add("marks=" + marks)
+                .add("name='" + name + "'")
+                .toString();
+    }
+    //    @OneToOne
 //    private Laptop laptop;
 
    /* public Laptop getLaptop() {
@@ -25,16 +35,16 @@ public class Student {
     public void setLaptop(Laptop laptop) {
         this.laptop = laptop;
     }*/
-    @OneToMany(mappedBy = "student")
-   private List<Laptop> laptops = new ArrayList<Laptop>();
+//    @OneToMany(mappedBy = "student")
+//   private List<Laptop> laptops = new ArrayList<Laptop>();
+//
+//    public List<Laptop> getLaptops() {
+//        return laptops;
+//    }
 
-    public List<Laptop> getLaptops() {
-        return laptops;
-    }
-
-    public void setLaptops(List<Laptop> laptops) {
-        this.laptops = laptops;
-    }
+//    public void setLaptops(List<Laptop> laptops) {
+//        this.laptops = laptops;
+//    }
 
     public int getRollNo() {
         return rollNo;

@@ -1,31 +1,46 @@
 package com.bridgelabz.hibernate.model;
 
 
-import javax.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 //POJO Class
-@Entity
 //@Table(name = "bridgelabzEmployee")
+@Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Alien {
 
     @Id
     private int aid;
     //  @Transient         //Used to store Temporary Data
-    private FullName name;
-   // @Column(name ="Role")
-    private String role;
+//    private FullName name;
+  //  @Column(name ="Role")
+    private String color;
+    private String name;
 
-    @Override
-    public String toString() {
-        return "Alien[aid="+aid+", name="+name+" color="+role+"]";
-    }
-    public FullName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(FullName name) {
+    public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Alien[aid="+aid+", name="+name+" color="+color+"]";
+    }
+//    public FullName getName() {
+//        return name;
+//    }
+//
+//    public void setName(FullName name) {
+//        this.name = name;
+//    }
 
     public int getAid() {
         return aid;
@@ -35,11 +50,11 @@ public class Alien {
         this.aid = aid;
     }
 
-    public String getRole() {
-        return role;
+    public String getColor() {
+        return color;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -1,23 +1,20 @@
 package com.bridgelabz.hibernate.controller;
 
 import com.bridgelabz.hibernate.model.Alien;
-import com.bridgelabz.hibernate.model.FullName;
-import com.bridgelabz.hibernate.model.Laptop;
-import com.bridgelabz.hibernate.model.Student;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-public class App {
+public class HibernateBasics {
 
     public static void main(String[] args) {
 
         Alien alien;
-        //CACHING  EXAMPLES =-=========>>>>>>>>
 
+        //CACHING  EXAMPLES =-=========>>>>>>>>
 
         Configuration configuration = new Configuration().configure().addAnnotatedClass(Alien.class);
 
@@ -27,14 +24,26 @@ public class App {
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
         Session session = sessionFactory.openSession();
-
         session.beginTransaction();
-        alien = (Alien) session.get(Alien.class,001);
+        Query q1 = session.createQuery("from Alien where aid=001");
+        q1.setCacheable(true);
+     //   alien = (Alien) session.get(Alien.class,003);
+        alien = (Alien)q1.uniqueResult();
         System.out.println(alien);
-      //  System.out.println(session.get(Alien.class,002));
-
         session.getTransaction().commit();
         session.close();
+
+        Session session1 = sessionFactory.openSession();
+        session1.beginTransaction();
+        Query q2 = session1.createQuery("from Alien where aid=001");
+        q2.setCacheable(true);
+       // alien = (Alien) session1.get(Alien.class,003);
+        alien = (Alien)q2.uniqueResult();
+
+        System.out.println(alien);
+        session1.getTransaction().commit();
+        session1.close();
+
 
 
         //FIRST EXAMPLE --->>>>LEARNING HIBERNATE
@@ -67,7 +76,7 @@ public class App {
 */
 
 
-                  //SECOND EXAMPLE =======>>>>>>> MAPPING
+      //SECOND EXAMPLE =======>>>>>>> MAPPING
 
        /* Laptop laptop = new Laptop();
 
